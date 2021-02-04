@@ -13,8 +13,7 @@ Lowest Negative Coefficients
 Virt_functions                 : -0.0203
 Diagrams                       : -0.0
 
-Results:  
-[6.619898009614458, 6.707639088159624, 6.522581624056567, 6.440507563947502, 7.26606621809765, 7.31289523571356, 6.677117056896982, 6.842437663688098, 7.125143625981958, 6.8725688660930775, 6.676910974538272, 6.674772083751009]
+{'student_51': 6.25, 'student_52': 5.82, 'student_53': 8.42, 'student_54': 6.47, 'student_55': 7.43, 'student_56': 6.91, 'student_74': 7.57, 'student_75': 7.5, 'student_76': 6.83, 'student_77': 6.86, 'student_78': 6.04, 'student_79': 5.82}
 
 2 - Student,Grade,Readme,Interfaces,Virt_functions,Classes,Diagrams,Lines
 Readme exists, lines normalizated
@@ -32,7 +31,7 @@ Lowest Negative Coefficients
 Interfaces                     : -0.1096
 Diagrams                       : -0.0
 
-Results:  [7.524594503648686, 7.438829699676193, 9.299488187019133, 6.866363202308236, 7.9401892189116605, 7.851514978170522, 7.615031631927913, 8.185704720135126, 6.953232056009517, 9.10951672623821, 6.075473353047872, 5.8734064250123685]
+{'student_51': 7.52, 'student_52': 7.44, 'student_53': 9.3, 'student_54': 6.87, 'student_55': 7.94, 'student_56': 7.85, 'student_74': 7.62, 'student_75': 8.19, 'student_76': 6.95, 'student_77': 9.11, 'student_78': 6.08, 'student_79': 5.87}
 
 3 - Student,Grade,Readme,Interfaces,Virt_functions,Classes,Diagrams,Lines
 Readme chars are counted
@@ -50,7 +49,7 @@ Lowest Negative Coefficients
 Interfaces                     : -0.1638
 Diagrams                       : -0.0
 
-Results:  [7.313602707279109, 7.216953504907671, 9.396439599788096, 6.848303496058044, 7.7378642914020705, 8.013024585081322, 7.471023970118343, 8.264367245370241, 6.897117756852236, 8.90710321734408, 5.990557353177169, 5.845776672492434]
+{'student_51': 7.31, 'student_52': 7.22, 'student_53': 9.4, 'student_54': 6.85, 'student_55': 7.74, 'student_56': 8.01, 'student_74': 7.47, 'student_75': 8.26, 'student_76': 6.9, 'student_77': 8.91, 'student_78': 5.99, 'student_79': 5.85}
 
 4 - Student,Grade,Readme,Interfaces,Virt_functions,Classes,Diagrams,Lines
 Readme chars are counted and normalized
@@ -69,4 +68,4 @@ Interfaces                     : -0.1638
 Diagrams                       : -0.0
 
 
-Results:  [7.382329034126325, 7.311452204322594, 9.84888791819893, 6.848303496058044, 7.860235334482806, 8.66344290610483, 7.509968888665098, 8.691997723530692, 6.897117756852236, 9.102591435931714, 6.132973574921676, 6.050428401326364]
+{'student_51': 7.38, 'student_52': 7.31, 'student_53': 9.85, 'student_54': 6.85, 'student_55': 7.86, 'student_56': 8.66, 'student_74': 7.51, 'student_75': 8.69, 'student_76': 6.9, 'student_77': 9.1, 'student_78': 6.13, 'student_79': 6.05}

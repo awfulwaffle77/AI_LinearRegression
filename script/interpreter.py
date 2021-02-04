@@ -1,7 +1,5 @@
 import os
 
-# TODO: Numarul de comentarii, nr de linii din README, normalizarea nr de linii de cod intr-un interval [0,1]
-
 PATH = "F:\\Projects\\Python\\IA\\LinearRegression\\test"  # Path-ul in care se afla lucrarile studentilor
 GRADES_PATH = "F:\\Projects\\Python\\IA\\LinearRegression"  # In ce folder se afla labels.txt
 PATH_TEST_CSV = "F:\\Projects\\Python\\IA\\LinearRegression\\csv\\test_4.csv"
@@ -59,33 +57,33 @@ def check_readme(path):  # returneaza 1 daca are fisier de readme
     readme = 0
     for std in os.listdir(path):
         if "read" in std.lower() or "raed" in std.lower():
-            # readme.append(std.split("\\")[-3].split("_")[1])
             readme = 1
-            # This is for readme char normalization
+            # Pentru normalizarea numarului de caractere din readme. Daca comentam partea asta, vom avea numai
+            #       0 sau 1, daca are fisier de readme sau nu
             with open(path + "\\" + std, "r") as file:
                 filename = file.read()
                 readme = sum(len(word) for word in filename)
+            #### Comenteaza pana aici
 
     return readme
 
 
 def check_interface(std, interfaces, virtual_functions):
     if ".h" in std:  # verificam numai dupa headere
-        # Daca prima litera este i si urmaotarea este majuscula (ex. IDrawable sau iDraw)
+        # Daca prima litera este i si urmatoarea este majuscula (ex. IDrawable sau iDraw)
         if std.split("\\")[-1][0].lower() == "i" and std.split("\\")[-1][1].isupper():
             virtual_functions += check_virtual_functions(std)
             interfaces += 1
     return interfaces, virtual_functions
 
 
-def trace_files(path, diagram_path):  # returneaza o lista cu studentii care au interfete
+def trace_files(path, diagram_path):
     interfaces = 0
     virtual_functions = 0
     classes = 0
     diagrams = 0
     lines = 0
     _path = path + "\\"
-    # Am presupus ca acele clase al caror nume incepe cu I este interfata si a doua litera este neaparat majuscula
     for std in os.listdir(path):  # parcurge folderul pentru student cu .cpp si .h
         try:
             interfaces, virtual_functions = check_interface(_path + std, interfaces, virtual_functions)
@@ -98,10 +96,8 @@ def trace_files(path, diagram_path):  # returneaza o lista cu studentii care au 
     if diagram_path is not None:
         diagrams = 1
 
-    ret_dict = {"interfaces": interfaces, "vfuncs": virtual_functions, "classes": classes, "diagrams": diagrams,
+    return {"interfaces": interfaces, "vfuncs": virtual_functions, "classes": classes, "diagrams": diagrams,
                 "lines": lines}
-    # return interfaces, virtual_functions, classes, diagrams, lines
-    return ret_dict
 
 
 def check_virtual_functions(path):  # returneaza numarul functiilor virtuale
@@ -194,20 +190,26 @@ def get_students_as_obj(student_list, grades_dict):
 def normalize_lines(obj_std):  # Rescaling (min-max normalization)
     max_lines = -1
     min_lines = 1000000
+    # Comenteaza aici pentru a nu normaliza liniile din readme(in cazul in care ma intereseaza doar existenta readme)
     max_readme_chars = -1
     min_readme_chars = 1000000
+    # Pana aici
     for obj in obj_std:
         if obj.lines > max_lines:
             max_lines = obj.lines
         if obj.lines < min_lines:
             min_lines = obj.lines
+        # Comenteaza aici
         if obj.readme > max_readme_chars:
             max_readme_chars = obj.readme
         if obj.readme < min_readme_chars:
             min_readme_chars = obj.readme
+        # Pana aici
     for obj in obj_std:
         obj.lines = (obj.lines - min_lines) / (max_lines - min_lines)
+        # Comenteaza aici
         obj.readme = (obj.readme - min_readme_chars) / (max_readme_chars - min_readme_chars)
+        # Pana aici
 
 
 if __name__ == "__main__":
@@ -231,11 +233,6 @@ if __name__ == "__main__":
         print("Diagrams : ", trace["diagrams"])
         print("Lines : ", trace["lines"])
 
-    # if PATH.split("\\")[-1] == "train":
-    #     write_training_csv(student_list, grades_dict)
-    # elif PATH.split("\\")[-1] == "test":
-    #     write_test_csv(student_list)
     obj_std = get_students_as_obj(student_list, grades_dict)
     normalize_lines(obj_std)
     write_to_csv(obj_std)
-    print(obj_std)
