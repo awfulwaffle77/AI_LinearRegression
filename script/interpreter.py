@@ -2,10 +2,10 @@ import os
 
 # TODO: Numarul de comentarii, nr de linii din README, normalizarea nr de linii de cod intr-un interval [0,1]
 
-PATH = "F:\\Projects\\Python\\IA\\LinearRegression\\train"  # Path-ul in care se afla lucrarile studentilor
+PATH = "F:\\Projects\\Python\\IA\\LinearRegression\\test"  # Path-ul in care se afla lucrarile studentilor
 GRADES_PATH = "F:\\Projects\\Python\\IA\\LinearRegression"  # In ce folder se afla labels.txt
-PATH_TEST_CSV = "F:\\Projects\\Python\\IA\\LinearRegression\\csv\\test_3.csv"
-PATH_TRAIN_CSV = "F:\\Projects\\Python\\IA\\LinearRegression\\csv\\training_3.csv"
+PATH_TEST_CSV = "F:\\Projects\\Python\\IA\\LinearRegression\\csv\\test_4.csv"
+PATH_TRAIN_CSV = "F:\\Projects\\Python\\IA\\LinearRegression\\csv\\training_4.csv"
 CSV_HEADER = "Student,Grade,Readme,Interfaces,Virt_functions,Classes,Diagrams,Lines"
 
 # Daca vreau sa printez un student si al catelea sa fie
@@ -137,61 +137,6 @@ def read_grades():
     return dict
 
 
-def write_training_csv(student_list, grades_dict):
-    diagram_path = find_diagram_path(student_list[_INDEX])  # unii studenti aveau doar poze, altii  doar .cd
-    f = open(PATH_TRAIN_CSV, "w")
-    f.write("Student,Grade,Readme,Interfaces,Virt_functions,Classes,Diagrams,Lines")
-    f.write("\n")
-
-    for student in student_list:
-        if str(student) in grades_dict:
-            readme_path = find_readme_path(student)
-            path = find_classes_path(student)
-            trace = trace_files(path, diagram_path)
-            f.write(str(student))
-            f.write(",".rstrip('\n'))
-            f.write(str(grades_dict[student]))
-            f.write(",".rstrip('\n'))
-            f.write(str(check_readme(readme_path)).rstrip('\n'))
-            f.write(",".rstrip('\n'))
-            f.write(str(trace[0]).rstrip('\n'))
-            f.write(",".rstrip('\n'))
-            f.write(str(trace[1]).rstrip('\n'))
-            f.write(",".rstrip('\n'))
-            f.write(str(trace[2]).rstrip('\n'))
-            f.write(",".rstrip('\n'))
-            f.write(str(trace[3]).rstrip('\n'))
-            f.write(",".rstrip('\n'))
-            f.write(str(trace[4]))
-            f.write("\n")
-
-
-def write_test_csv(student_list):
-    diagram_path = find_diagram_path(student_list[_INDEX])  # unii studenti aveau doar poze, altii  doar .cd
-    f = open(PATH_TEST_CSV, "w")
-    f.write(CSV_HEADER)
-    f.write("\n")
-
-    for student in student_list:
-        readme_path = find_readme_path(student)
-        path = find_classes_path(student)
-        trace = trace_files(path, diagram_path)
-        f.write(str(student))
-        f.write(",".rstrip('\n'))
-        f.write(str(check_readme(readme_path)).rstrip('\n'))
-        f.write(",".rstrip('\n'))
-        f.write(str(trace[0]).rstrip('\n'))
-        f.write(",".rstrip('\n'))
-        f.write(str(trace[1]).rstrip('\n'))
-        f.write(",".rstrip('\n'))
-        f.write(str(trace[2]).rstrip('\n'))
-        f.write(",".rstrip('\n'))
-        f.write(str(trace[3]).rstrip('\n'))
-        f.write(",".rstrip('\n'))
-        f.write(str(trace[4]))
-        f.write("\n")
-
-
 def write_to_csv(obj_std):
     if PATH.split("\\")[-1] == "test":
         filename = PATH_TEST_CSV
@@ -242,13 +187,20 @@ def get_students_as_obj(student_list, grades_dict):
 def normalize_lines(obj_std):  # Rescaling (min-max normalization)
     max_lines = -1
     min_lines = 1000000
+    max_readme_chars = -1
+    min_readme_chars = 1000000
     for obj in obj_std:
         if obj.lines > max_lines:
             max_lines = obj.lines
         if obj.lines < min_lines:
             min_lines = obj.lines
+        if obj.readme > max_readme_chars:
+            max_readme_chars = obj.readme
+        if obj.readme < min_readme_chars:
+            min_readme_chars = obj.readme
     for obj in obj_std:
         obj.lines = (obj.lines - min_lines) / (max_lines - min_lines)
+        obj.readme = (obj.readme - min_readme_chars) / (max_readme_chars - min_readme_chars)
 
 
 if __name__ == "__main__":

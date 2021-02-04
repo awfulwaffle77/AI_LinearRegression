@@ -34,3 +34,39 @@ Diagrams                       : -0.0
 
 Results:  
 [6.871194385937963, 6.980703123116347, 8.627500456446434, 5.920017496361453, 7.846132603819669, 7.689810434947972, 5.476944445310761, 6.501862958106699, 6.395110986762402, 9.23438068356419, 4.7724192734771345, 3.5245427276795445]
+
+3 - Student,Grade,Readme,Interfaces,Virt_functions,Classes,Diagrams,Lines
+Readme chars are counted
+
+Highest Positive Coefficients
+-----------------------------
+Lines                          : 5.1579
+(intercept)                    : 1.3901
+Interfaces                     : 0.5666
+Classes                        : 0.2167
+
+Lowest Negative Coefficients
+----------------------------
+Virt_functions                 : -0.1165
+Readme                         : -0.0005
+Diagrams                       : -0.0
+
+Results:  [7.344732852196216, 7.420079459692237, 8.521898247392464, 6.335823016689785, 8.366676488305284, 6.77384375961372, 6.761311745380432, 7.0436290468175, 6.806753325992626, 9.949892357018975, 4.4943299723251915, 3.933603447801581]
+
+4 - Student,Grade,Readme,Interfaces,Virt_functions,Classes,Diagrams,Lines
+Readme chars are counted and normalized
+
+Highest Positive Coefficients
+-----------------------------
+Lines                          : 5.1579
+(intercept)                    : 1.3901
+Interfaces                     : 0.5666
+Classes                        : 0.2167
+
+Lowest Negative Coefficients
+----------------------------
+Readme                         : -6.8309
+Virt_functions                 : -0.1165
+Diagrams                       : -0.0
+
+Results:  [6.798308032578544, 6.668745332717936, 4.9246015182427865, 6.335823016689787, 7.3937367400415965, 1.60253998062091, 6.451671014263752, 3.643652391418648, 6.806753325992629, 8.395617314550929, 3.362016318339681, 2.306471762717844]
