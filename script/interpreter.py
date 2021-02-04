@@ -2,12 +2,31 @@ import os
 
 # TODO: Numarul de comentarii, nr de linii din README, normalizarea nr de linii de cod intr-un interval [0,1]
 
-PATH = "F:\\Projects\\Python\\IA\\Tema2\\train"  # Path-ul in care se afla lucrarile studentilor
-GRADES_PATH = "F:\\Projects\\Python\\IA\\Tema2"  # In ce folder se afla labels.txt
+PATH = "F:\\Projects\\Python\\IA\\LinearRegression\\test"  # Path-ul in care se afla lucrarile studentilor
+GRADES_PATH = "F:\\Projects\\Python\\IA\\LinearRegression"  # In ce folder se afla labels.txt
+PATH_TEST_CSV = "F:\\Projects\\Python\\IA\\LinearRegression\\csv\\test_3.csv"
+PATH_TRAIN_CSV = "F:\\Projects\\Python\\IA\\LinearRegression\\csv\\training_3.csv"
+CSV_HEADER = "Student,Grade,Readme,Interfaces,Virt_functions,Classes,Diagrams,Lines"
 
 # Daca vreau sa printez un student si al catelea sa fie
-PRINT = True
+PRINT = False
 _INDEX = 0
+
+
+class Student:
+    def __init__(self, name, grade, readme, interfaces, vfuncs, classes, diagrams, lines):
+        self.name = name
+        if grade is None:
+            self.grade = -1
+        else:
+            self.grade = grade
+        self.readme = readme
+        self.interfaces = interfaces
+        self.vfuncs = vfuncs
+        self.classes = classes
+        self.diagrams = diagrams
+        self.lines = lines
+
 
 def find_classes_path(student):
     for subdir, dirs, files in os.walk(PATH + "\\" + student):
@@ -73,7 +92,11 @@ def trace_files(path, diagram_path):  # returneaza o lista cu studentii care au 
 
     if diagram_path is not None:
         diagrams = 1
-    return interfaces, virtual_functions, classes, diagrams, lines
+
+    ret_dict = {"interfaces": interfaces, "vfuncs": virtual_functions, "classes": classes, "diagrams": diagrams,
+                "lines": lines}
+    # return interfaces, virtual_functions, classes, diagrams, lines
+    return ret_dict
 
 
 def check_virtual_functions(path):  # returneaza numarul functiilor virtuale
@@ -112,7 +135,7 @@ def read_grades():
 
 def write_training_csv(student_list, grades_dict):
     diagram_path = find_diagram_path(student_list[_INDEX])  # unii studenti aveau doar poze, altii  doar .cd
-    f = open("training.csv", "w")
+    f = open(PATH_TRAIN_CSV, "w")
     f.write("Student,Grade,Readme,Interfaces,Virt_functions,Classes,Diagrams,Lines")
     f.write("\n")
 
@@ -141,8 +164,8 @@ def write_training_csv(student_list, grades_dict):
 
 def write_test_csv(student_list):
     diagram_path = find_diagram_path(student_list[_INDEX])  # unii studenti aveau doar poze, altii  doar .cd
-    f = open("test.csv", "w")
-    f.write("Student,Readme,Interfaces,Virt_functions,Classes,Diagrams,Lines")
+    f = open(PATH_TEST_CSV, "w")
+    f.write(CSV_HEADER)
     f.write("\n")
 
     for student in student_list:
@@ -165,6 +188,65 @@ def write_test_csv(student_list):
         f.write("\n")
 
 
+def write_to_csv(obj_std):
+    if PATH.split("\\")[-1] == "test":
+        filename = PATH_TEST_CSV
+    elif PATH.split("\\")[-1] == "train":
+        filename = PATH_TRAIN_CSV
+    else:
+        raise Exception("Wrong filename")
+
+    f = open(filename, "w")
+    f.write(CSV_HEADER)
+    f.write("\n")
+    for obj in obj_std:
+        f.write(str(obj.name))
+        f.write(",")
+        f.write(str(obj.grade))
+        f.write(",")
+        f.write(str(obj.readme))
+        f.write(",")
+        f.write(str(obj.interfaces))
+        f.write(",")
+        f.write(str(obj.vfuncs))
+        f.write(",")
+        f.write(str(obj.classes))
+        f.write(",")
+        f.write(str(obj.diagrams))
+        f.write(",")
+        f.write(str(obj.lines))
+        f.write("\n")
+
+
+def get_students_as_obj(student_list, grades_dict):
+    obj_student_list = []
+    diagram_path = find_diagram_path(student_list[_INDEX])  # unii studenti aveau doar poze, altii  doar .cd
+    for student in student_list:
+        readme_path = find_readme_path(student)
+        path = find_classes_path(student)
+        trace = trace_files(path, diagram_path)
+        if not student in grades_dict:
+            grade = None
+        elif student in grades_dict:
+            grade = grades_dict[student]
+        obj_student_list.append(Student(student, grade, check_readme(readme_path), trace["interfaces"],
+                                        trace["vfuncs"], trace["classes"], trace["diagrams"],
+                                        trace["lines"]))
+    return obj_student_list
+
+
+def normalize_lines(obj_std):  # Rescaling (min-max normalization)
+    max_lines = -1
+    min_lines = 1000000
+    for obj in obj_std:
+        if obj.lines > max_lines:
+            max_lines = obj.lines
+        if obj.lines < min_lines:
+            min_lines = obj.lines
+    for obj in obj_std:
+        obj.lines = (obj.lines - min_lines) / (max_lines - min_lines)
+
+
 if __name__ == "__main__":
 
     student_list = get_student_list()
@@ -180,13 +262,17 @@ if __name__ == "__main__":
         print("Path: ", path)
         print(student_list[_INDEX])
         print("README: ", check_readme(readme_path))
-        print("Interfaces: ", trace[0])
-        print("Virt funcs: ", trace[1])
-        print("Classes: ", trace[2])
-        print("Diagrams : ", trace[3])
-        print("Lines : ", trace[4])
+        print("Interfaces: ", trace["interfaces"])
+        print("Virt funcs: ", trace["vfuncs"])
+        print("Classes: ", trace["classes"])
+        print("Diagrams : ", trace["diagrams"])
+        print("Lines : ", trace["lines"])
 
-    if PATH.split("\\")[-1] == "train":
-        write_training_csv(student_list, grades_dict)
-    elif PATH.split("\\")[-1] == "test":
-        write_test_csv(student_list)
+    # if PATH.split("\\")[-1] == "train":
+    #     write_training_csv(student_list, grades_dict)
+    # elif PATH.split("\\")[-1] == "test":
+    #     write_test_csv(student_list)
+    obj_std = get_students_as_obj(student_list, grades_dict)
+    normalize_lines(obj_std)
+    write_to_csv(obj_std)
+    print(obj_std)
