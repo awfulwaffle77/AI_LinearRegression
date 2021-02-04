@@ -1,4 +1,36 @@
 1 - Student,Grade,Readme,Interfaces,Virt_functions,Classes,Diagrams,Lines
 Nenormalizat
+
+Highest Positive Coefficients
+-----------------------------
+(intercept)                    : 6.0731
+Interfaces                     : 0.4372
+Readme                         : 0.3226
+Lines                          : 0.0002
+
+Lowest Negative Coefficients
+----------------------------
+Virt_functions                 : -0.0203
+Diagrams                       : -0.0
+
+Results:  
+[6.619898009614458, 6.707639088159624, 6.522581624056567, 6.440507563947502, 7.26606621809765, 7.31289523571356, 6.677117056896982, 6.842437663688098, 7.125143625981958, 6.8725688660930775, 6.676910974538272, 6.674772083751009]
+
 2 - Student,Grade,Readme,Interfaces,Virt_functions,Classes,Diagrams,Lines
 Linii normalizate
+
+Highest Positive Coefficients
+-----------------------------
+Lines                          : 4.1548
+(intercept)                    : 1.9127
+Interfaces                     : 0.4553
+Classes                        : 0.1759
+
+Lowest Negative Coefficients
+----------------------------
+Readme                         : -0.8742
+Virt_functions                 : -0.0782
+Diagrams                       : -0.0
+
+Results:  
+[6.871194385937963, 6.980703123116347, 8.627500456446434, 5.920017496361453, 7.846132603819669, 7.689810434947972, 5.476944445310761, 6.501862958106699, 6.395110986762402, 9.23438068356419, 4.7724192734771345, 3.5245427276795445]

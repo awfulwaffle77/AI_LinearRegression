@@ -2,7 +2,7 @@ import os
 
 # TODO: Numarul de comentarii, nr de linii din README, normalizarea nr de linii de cod intr-un interval [0,1]
 
-PATH = "F:\\Projects\\Python\\IA\\LinearRegression\\test"  # Path-ul in care se afla lucrarile studentilor
+PATH = "F:\\Projects\\Python\\IA\\LinearRegression\\train"  # Path-ul in care se afla lucrarile studentilor
 GRADES_PATH = "F:\\Projects\\Python\\IA\\LinearRegression"  # In ce folder se afla labels.txt
 PATH_TEST_CSV = "F:\\Projects\\Python\\IA\\LinearRegression\\csv\\test_3.csv"
 PATH_TRAIN_CSV = "F:\\Projects\\Python\\IA\\LinearRegression\\csv\\training_3.csv"
@@ -38,7 +38,8 @@ def find_classes_path(student):
 def find_readme_path(student):
     for subdir, dirs, files in os.walk(PATH + "\\" + student):
         for file in files:
-            if "read" in file and ".txt" in file:
+            # we discovered that some readmes are named RAED
+            if "read" in file.lower() and ".txt" in file.lower() or "raed" in file.lower():
                 return subdir
 
 
@@ -57,9 +58,12 @@ def get_student_list():
 def check_readme(path):  # returneaza 1 daca are fisier de readme
     readme = 0
     for std in os.listdir(path):
-        if "read" in std.lower():
+        if "read" in std.lower() or "raed" in std.lower():
             # readme.append(std.split("\\")[-3].split("_")[1])
             readme = 1
+            with open(path + "\\" + std, "r") as file:
+                filename = file.read()
+                readme = sum(len(word) for word in filename)
 
     return readme
 
