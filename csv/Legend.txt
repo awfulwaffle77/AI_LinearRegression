@@ -1,0 +1,4 @@
+1 - Student,Grade,Readme,Interfaces,Virt_functions,Classes,Diagrams,Lines
+Nenormalizat
+2 - Student,Grade,Readme,Interfaces,Virt_functions,Classes,Diagrams,Lines
+Linii normalizate
