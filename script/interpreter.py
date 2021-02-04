@@ -9,7 +9,7 @@ PATH_TRAIN_CSV = "F:\\Projects\\Python\\IA\\LinearRegression\\csv\\training_4.cs
 CSV_HEADER = "Student,Grade,Readme,Interfaces,Virt_functions,Classes,Diagrams,Lines"
 
 # Daca vreau sa printez un student si al catelea sa fie
-PRINT = False
+PRINT = True
 _INDEX = 0
 
 
@@ -61,6 +61,7 @@ def check_readme(path):  # returneaza 1 daca are fisier de readme
         if "read" in std.lower() or "raed" in std.lower():
             # readme.append(std.split("\\")[-3].split("_")[1])
             readme = 1
+            # This is for readme char normalization
             with open(path + "\\" + std, "r") as file:
                 filename = file.read()
                 readme = sum(len(word) for word in filename)
@@ -174,10 +175,16 @@ def get_students_as_obj(student_list, grades_dict):
         readme_path = find_readme_path(student)
         path = find_classes_path(student)
         trace = trace_files(path, diagram_path)
-        if not student in grades_dict:
-            grade = None
-        elif student in grades_dict:
-            grade = grades_dict[student]
+        if PATH.split("\\")[-1] == "test":  # studentii din test nu au nota, asa ca ii tratez diferit
+            if not student in grades_dict:
+                grade = None
+            elif student in grades_dict:
+                grade = grades_dict[student]
+        elif PATH.split("\\")[-1] == "train":
+            if student not in grades_dict:
+                continue
+            else:
+                grade = grades_dict[student]
         obj_student_list.append(Student(student, grade, check_readme(readme_path), trace["interfaces"],
                                         trace["vfuncs"], trace["classes"], trace["diagrams"],
                                         trace["lines"]))
